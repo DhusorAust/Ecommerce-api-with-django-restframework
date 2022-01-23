@@ -1,12 +1,20 @@
-from django.urls import path
+from django.urls import path,include
 
 from . import views
 
+from .views import  CartViewSet 
+
+from rest_framework.routers import DefaultRouter
+
+router=DefaultRouter()
+
+router.register('cartview', CartViewSet, basename='cartview')
+
+
+
 
 urlpatterns = [
-      path('createcart/', views.CreatCart.as_view(), name='carts_c'),
-      path('getcart/', views.get_cart, name='carts_g'),
-
+     path('', include(router.urls)),
    
 ]
 

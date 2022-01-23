@@ -1,10 +1,8 @@
-from itertools import product
+from traceback import print_exc
 from django.shortcuts import render
 
 # Create your views here.
-from rest_framework.decorators import api_view
 
-from rest_framework.views import APIView
 
 from .models import AddToCart
 
@@ -14,41 +12,47 @@ from rest_framework.response import Response
 from django.contrib.auth.models import User
 from django.http.response import JsonResponse
 
-from  rest_framework import generics
 
-class CreatCart(APIView):
-    def post(self,request):
-        
-        user = request.user
-        
-        data = request.data
+from rest_framework import viewsets
 
-        cart = AddToCart.objects.create(
-                user = user,
-                product  = data['product'],
-                qty = data['qty'],
-                price = data['price'],
-                shippingPrice = data['shippingPrice']
-            )
-        
-        cart.save()
-    
-        serializer=AddToCartSerializer(cart,many=False)
-    
-    
-    
-        return Response(serializer.data)
-    
-    
-    
+from products.models import Product
 
 
-
-@api_view(['GET'])
-
-def get_cart(request): 
+class CartViewSet(viewsets.ModelViewSet):
     
     queryset=AddToCart.objects.all()
+    
+    serializer_class= AddToCartSerializer
 
-    serializer=AddToCartSerializer(queryset , many = True)
-    return Response(serializer.data)
+
+
+
+class CreateCartViewSet(viewsets.ModelViewSet):
+    
+    queryset=AddToCart.objects.all()
+    
+    serializer_class= AddToCartSerializer   
+    
+    
+    def create(self, request):
+        
+        data=request.user.id
+        
+        cart=AddToCart.objects.create(
+
+        user=request.user,
+        
+        product=Product.objects.get(pk=data['product']),
+        
+        qty=data['qty'],
+        
+        price=data['price'],
+        
+        shippingPrice=data['shippingPrice']
+        
+
+        )
+        
+        cart.save()
+        
+        return Response("created")

@@ -1,14 +1,26 @@
 
-from django.urls import path
+from django.urls import path,include
 
 from . import views
 
-from .views import EventView
+
+
+
+from .views import  ProductViewSet 
+
+from rest_framework.routers import DefaultRouter
+
+router=DefaultRouter()
+
+router.register('product', ProductViewSet, basename='product')
+
 
 
 urlpatterns = [
-   path('products/', views.productList, name='products'),
-   
-      path('create_product/', EventView.as_view(), name='products_'),
+    
+    
+    path('', include(router.urls)),
 
 ]
+
+
