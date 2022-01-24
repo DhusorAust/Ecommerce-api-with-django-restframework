@@ -22,7 +22,7 @@ class Product(models.Model):
     price = models.CharField(max_length=20,blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     stock = models.IntegerField(default=100)
-    _id = models.AutoField(primary_key=True, editable=False)
+    # _id = models.AutoField(primary_key=True, editable=False)
     
     class Meta:
         pass
