@@ -1,5 +1,5 @@
 
-from .models import ShippingAddress,AddToCart
+from .models import AddToCart
 from rest_framework import serializers
 from django.contrib.auth.models import User
 
@@ -11,10 +11,10 @@ class AddToCartSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class ShippingAddressSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ShippingAddress
-        fields = '__all__'
+# class ShippingAddressSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = ShippingAddress
+#         fields = '__all__'
 
 
 

@@ -33,7 +33,7 @@ class CartViewSet(viewsets.ViewSet):
     
     def list(self, request):
         
-        queryset = AddToCart.objects.filter(Q(user=request.user.id) and Q( is_ordered=False))
+        queryset = AddToCart.objects.filter(user=request.user.id).filter( is_ordered=False)
         serializer = AddToCartSerializer(queryset, many=True)
         return Response(serializer.data)
     
