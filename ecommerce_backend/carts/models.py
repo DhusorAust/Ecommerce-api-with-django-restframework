@@ -19,6 +19,8 @@ class AddToCart(models.Model):
     shippingPrice = models.IntegerField(default=100, blank=True, null=True)
 
     price=models.IntegerField(default=0, blank=True, null=True)
+    
+    is_ordered=models.BooleanField(default=False)
 
 
 

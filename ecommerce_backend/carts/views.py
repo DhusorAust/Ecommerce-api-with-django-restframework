@@ -25,16 +25,15 @@ from rest_framework.permissions import IsAuthenticated,IsAdminUser
 
 from rest_framework.decorators import action
 
-
+from django.db.models.query_utils import Q
 
 
 class CartViewSet(viewsets.ViewSet):
     
-    permission_classes=[IsAdminUser] 
     
     def list(self, request):
         
-        queryset = AddToCart.objects.filter(id=request.user.id)
+        queryset = AddToCart.objects.filter(Q(user=request.user.id) and Q( is_ordered=False))
         serializer = AddToCartSerializer(queryset, many=True)
         return Response(serializer.data)
     
