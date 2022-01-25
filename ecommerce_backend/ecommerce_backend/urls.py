@@ -8,14 +8,14 @@ from django.conf.urls.static import static
 
 
 
-import accounts,products,carts
+import accounts,products,carts,orders
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('accounts.urls')),
     path('',include('products.urls')),
-        path('',include('carts.urls')),
-
+    path('',include('carts.urls')),
+    path('',include('orders.urls')),
 
 
 ]

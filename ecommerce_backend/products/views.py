@@ -16,13 +16,17 @@ from rest_framework import status
 
 from rest_framework import viewsets
 
+from rest_framework.permissions import IsAuthenticated,IsAdminUser
 
-class ProductViewSet(viewsets.ModelViewSet):
-    
 
-    queryset=Product.objects.all()
+
+class ProductViewSet(viewsets.ViewSet):
     
-    serializer_class= ProductSerializer   
+    def list(self, request):
+        
+        queryset = Product.objects.all()
+        serializer = ProductSerializer(queryset, many=True)
+        return Response(serializer.data)
     
     
     def create(self, request):
@@ -53,6 +57,18 @@ class ProductViewSet(viewsets.ModelViewSet):
 
 
 
+def get_permissions(self):
+   
+    if self.action == 'list':
+        permission_classes = [IsAdminUser]
+        
+        
+    elif self.action == 'create':
+        
+        permission_classes = [IsAdminUser]
+        
+    return [permission() for permission in permission_classes]
+            
 
 
 

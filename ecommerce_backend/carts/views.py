@@ -25,12 +25,6 @@ from rest_framework.permissions import IsAuthenticated,IsAdminUser
 
 from rest_framework.decorators import action
 
-# class CartViewSet(viewsets.ModelViewSet):
-    
-#     queryset=AddToCart.objects.get(id=request.user.id)
-    
-#     serializer_class= AddToCartSerializer
-
 
 
 
@@ -71,7 +65,7 @@ def get_permissions(self):
         
     elif self.action == 'create':
         
-        permission_classes = [IsAdminUser]
+        permission_classes = [IsAuthenticated]
         
     return [permission() for permission in permission_classes]
             
